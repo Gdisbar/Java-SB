@@ -20,7 +20,24 @@ You will not see that the threads run one at a time, in a sequential manner.
  * **/
 
 
+// class LazySingletonStaticInner {
 
+//     private LazySingletonStaticInner() {
+//         // Private constructor
+//     }
+
+//     private static class SingletonHelper {
+//         private static final LazySingletonStaticInner INSTANCE = new LazySingletonStaticInner();
+//     }
+
+//     public static LazySingletonStaticInner getInstance() {
+//         return SingletonHelper.INSTANCE;
+//     }
+
+//     public void showMessage() {
+//         System.out.println("Lazy Singleton (Static Inner Class) Instance");
+//     }
+// }
 
 class ThreadSafeSingleton {
     private static volatile ThreadSafeSingleton instance; // Volatile for visibility
@@ -28,7 +45,7 @@ class ThreadSafeSingleton {
     private ThreadSafeSingleton() {
         // Private constructor to prevent instantiation from outside
     }
-
+    // Double lock - instance is created when getInstance() is called , better way to use LazySingletonStaticInner
     public static ThreadSafeSingleton getInstance() {
         if (instance == null) { // First check: avoid unnecessary synchronization
             synchronized (ThreadSafeSingleton.class) {
@@ -45,6 +62,20 @@ class ThreadSafeSingleton {
         return message;
     }
 }
+// If ouside ThreadSingleton it can't be static since it's a top-level class.
+
+//  class SingletonRunnable implements Runnable{
+//             private ThreadSafeSingleton singleton;
+//             private String message;
+//             protected SingletonRunnable(ThreadSafeSingleton singleton,String message) {
+//                 this.singleton = singleton;
+//                 this.message = message;
+//             }
+//             @Override
+//             public void run(){
+//                 System.out.println(Thread.currentThread().getName() + ": " + singleton.doSomething(message));
+//             }
+// }
 
 class ThreadSingleton {
 
@@ -67,6 +98,7 @@ class ThreadSingleton {
         for (int i = 0; i < 10; i++) {
             ThreadSafeSingleton singleton = ThreadSafeSingleton.getInstance();
             String message = "Thread " + (i + 1) + " Message";
+            // since we're creating SingletonRunnable instance directly without creating object 
             threads[i] = new Thread(new SingletonRunnable(singleton, message), "Thread-" + (i + 1));
             System.out.println("Creating " + threads[i].getName() + " " + threads[i].getState());
         }
