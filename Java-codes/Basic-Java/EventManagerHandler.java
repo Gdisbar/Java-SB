@@ -71,9 +71,9 @@ class Event{
 
 }
 abstract class EventListener{
-    protected interface ListenerEvent{
-        void onEvent(Event event);
-    }
+    // protected interface ListenerEvent{
+    //     void onEvent(Event event);
+    // }
     protected abstract void onEvent(Event event);
 }
 
