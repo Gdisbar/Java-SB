@@ -34,7 +34,9 @@
     EventManager "1" -- "*" Event : events
 
 
-    When Interfaces Are Useful: Interfaces are valuable when you want to define a contract that multiple unrelated classes can implement. 
+    Why Abstract class not Interface ? 
+    
+    Interfaces are valuable when you want to define a contract that multiple unrelated classes can implement. 
     They allow for a "has-a" relationship, as opposed to the "is-a" relationship enforced by inheritance. 
     If EventListener were an interface, classes unrelated by inheritance could implement onEvent.
  * **/
