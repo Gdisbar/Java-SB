@@ -32,19 +32,6 @@ class SharedCounter{
 	}
 }
 
-class ThreadCounterIncrement{
-	static class ThreadCounterIncrementRunnable implements Runnable{
-		private SharedCounter sharedCounter;
-		protected ThreadCounterIncrementRunnable(SharedCounter sharedCounter){
-			this.sharedCounter = sharedCounter;
-		}
-		@Override
-		public void run(){
-			System.out.println(Thread.currentThread().getName()+" Count incremented : "+sharedCounter.increment());
-		}
-	}
-}
-
 class ThreadCounterDecrement{
 	static class ThreadCounterDecrementRunnable implements Runnable{
 		private SharedCounter sharedCounter;
@@ -62,15 +49,18 @@ class ThreadCounterTimeout{
 	public static void main(String[] args)throws InterruptedException{
 		Thread[] threads = new Thread[6];
 		try{
+			SharedCounter sharedCounter = new SharedCounter(); // single instance
 			for (int i=0;i<6 ;i++ ) {
 				// System.out.println("Thread-" + (i + 1));
 				if (i%2==0){
-					SharedCounter incrementCounter = new SharedCounter();
-					ThreadCounterIncrement.ThreadCounterIncrementRunnable incrementTask = new ThreadCounterIncrement.ThreadCounterIncrementRunnable(incrementCounter);
-					threads[i] = new Thread(incrementTask);
+					// SharedCounter incrementCounter = new SharedCounter();
+					// ThreadCounterIncrement.ThreadCounterIncrementRunnable incrementTask = new ThreadCounterIncrement.ThreadCounterIncrementRunnable(incrementCounter);
+					threads[i] = new Thread(()-> {
+						System.out.println(Thread.currentThread().getName()+" Count incremented : "+sharedCounter.increment());
+					});
 				}else{
-					SharedCounter decrementCounter = new SharedCounter();
-					ThreadCounterDecrement.ThreadCounterDecrementRunnable decrementTask = new ThreadCounterDecrement.ThreadCounterDecrementRunnable(decrementCounter);
+					// SharedCounter decrementCounter = new SharedCounter();
+					ThreadCounterDecrement.ThreadCounterDecrementRunnable decrementTask = new ThreadCounterDecrement.ThreadCounterDecrementRunnable(sharedCounter);
 					threads[i] = new Thread(decrementTask);
 					if(i-1>0){
 						threads[i-1].join();
@@ -90,3 +80,21 @@ class ThreadCounterTimeout{
 	}
 
 }
+
+/*
+
+you're creating a new instance of SharedCounter for each thread, meaning each thread has 
+its own lock and count variable.
+
+So even though count is static and shared, the lock is not shared, defeating the purpose of 
+ReentrantLock.
+
+
+✅ Keep return inside the try block.
+
+❌ Never put return in the finally block.
+
+Make SharedCounter a shared instance for all threads if you want correct concurrent 
+updates to count.
+
+*/

@@ -36,50 +36,44 @@ class ProduceConsume{
 	}
 
 }
-class Produce implements Runnable{
-	private final ProduceConsume pc;
-	private final int value;
-	protected Produce(ProduceConsume pc,int value){
-		this.value = value;
-		this.pc = pc;
-	}
-	@Override
-	public void run(){
-		try{					// catch Exception thrown by ProduceConsume
-			pc.produce(value);
-		}catch(InterruptedException e){  
-			Thread.currentThread().interrupt(); // Restore interrupted status
-		}
-	}
 
-}
-
-class Consume implements Runnable{
-	private final ProduceConsume pc;
-	protected Consume(ProduceConsume pc){
-		this.pc = pc;
-	}
-	@Override
-	public void run(){
-		try{
-			pc.consume();
-		}catch(InterruptedException e){
-			Thread.currentThread().interrupt(); // Restore interrupted status
-		}
-	}
-}
-
-class ProducerConsumer{
+class ProducerConsumer{  
 	public static void main(String[] args){
 
 			ExecutorService executor = Executors.newCachedThreadPool();
 			ProduceConsume pc = new ProduceConsume(5);
 			for (int i=0;i< 10 ;i++ ) {
-				executor.submit(new Produce(pc,i+1));
+				int value = i+1;
+				executor.submit(() -> {
+					try{					// catch Exception thrown by ProduceConsume
+						pc.produce(value);
+					}catch(InterruptedException e){  
+						Thread.currentThread().interrupt(); // Restore interrupted status
+					}
+				});
 			}
 			for (int i=0;i < 10 ;i++) {
-				executor.submit(new Consume(pc));
+				executor.submit(() -> {
+					try{					// catch Exception thrown by ProduceConsume
+						pc.consume();
+					}catch(InterruptedException e){  
+						Thread.currentThread().interrupt(); // Restore interrupted status
+					}
+				});
 			}
 		executor.shutdown();
 	}
 }
+
+/*
+The lambda expression () -> { pc.produce(value); ... } can access pc and value because 
+it captures them from the main method's scope. This is a fundamental feature of lambda 
+expressions in Java.
+
+To be captured by a lambda, local variables from the enclosing scope must be effectively final. 
+This means that their values cannot be changed after they are first assigned.
+
+If you try to change the value of pc or value after their initial assignment within 
+the loop, you will get a compilation error.
+
+*/

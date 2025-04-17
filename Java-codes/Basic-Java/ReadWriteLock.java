@@ -64,85 +64,158 @@ class ReadWrite {
             lock.unlock();
         }
     }
-}
-
-class ReaderThread implements Runnable {
-        private ReadWrite lock;
-
-        public ReaderThread(ReadWrite lock) {
-            this.lock = lock;
-        }
-
-        @Override
-        public void run() {
+    // Helper for reader task
+    public Runnable readerTask(String name, long sleepMillis) {
+        return () -> {
             try {
-                lock.readLock();
-                System.out.println(Thread.currentThread().getName() + " reading");
-                Thread.sleep(100);
+                readLock();
+                System.out.println(name + " reading...");
+                Thread.sleep(sleepMillis);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
-                System.err.println(Thread.currentThread().getName() + " interrupted during read");
+                System.err.println(name + " interrupted during read");
             } finally {
-                lock.readUnlock();
-                System.out.println(Thread.currentThread().getName() + " read unlock");
+                readUnlock();
+                System.out.println(name + " read unlock");
             }
-        }
+        };
     }
 
-
+    // Helper for writer task
+    public Runnable writerTask(String name, long sleepMillis) {
+        return () -> {
+            try {
+                writeLock();
+                System.out.println(name + " writing...");
+                Thread.sleep(sleepMillis);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                System.err.println(name + " interrupted during write");
+            } finally {
+                writeUnlock();
+                System.out.println(name + " write unlock");
+            }
+        };
+    }
+}
 
 public class ReadWriteLock {
     public static void main(String[] args) {
         ReadWrite lock = new ReadWrite();
-        ReaderThread reader = new ReaderThread(lock);
-        Thread t1 = new Thread(reader, "Reader 1");
-        Thread t2 = new Thread(reader, "Reader 2");
-        Thread t3 = new Thread(new WriterThread(lock), "Writer 1");
-        Thread t4 = new Thread(reader, "Reader 3");
-        Thread t5 = new Thread(new WriterThread(lock), "Writer 2");
 
-        t1.start();
-        t2.start();
-        t3.start();
-        t4.start();
-        t5.start();
+        Thread[] threads = {
+            new Thread(lock.readerTask("Reader 1", 100)),
+            new Thread(lock.readerTask("Reader 2", 100)),
+            new Thread(lock.writerTask("Writer 1", 200)),
+            new Thread(lock.readerTask("Reader 3", 100)),
+            new Thread(lock.writerTask("Writer 2", 200))
+        };
 
-        try {
-            t1.join();
-            t2.join();
-            t3.join();
-            t4.join();
-            t5.join();
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            System.err.println("Main thread interrupted");
+        for (Thread t : threads) t.start();
+        for (Thread t : threads) {
+            try {
+                t.join();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                System.err.println("Main thread interrupted");
+            }
         }
 
         System.out.println("Main thread finished");
     }
-
-    static class WriterThread implements Runnable {
-        private ReadWrite lock;
-
-        public WriterThread(ReadWrite lock) {
-            this.lock = lock;
-        }
-
-        @Override
-        public void run() {
-            try {
-                lock.writeLock();
-                System.out.println(Thread.currentThread().getName() + " writing");
-                Thread.sleep(200);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                System.err.println(Thread.currentThread().getName() + " interrupted during write");
-            } finally {
-                lock.writeUnlock();
-                System.out.println(Thread.currentThread().getName() + " write unlock");
-            }
-    }
 }
 
-    
-}
+/*
+
+Feature | Description
+✅ Java 8 Lambdas | Used instead of anonymous Runnable classes.
+✅ Cleaner code | No need for separate ReaderThread and WriterThread classes.
+✅ Reusable task creators | readerTask() and writerTask() methods make the code extensible.
+✅ Named threads | Names passed in help trace behavior in logs.
+
+*/
+
+
+// class ReaderThread implements Runnable {
+//         private ReadWrite lock;
+
+//         public ReaderThread(ReadWrite lock) {
+//             this.lock = lock;
+//         }
+
+//         @Override
+//         public void run() {
+//             try {
+//                 lock.readLock();
+//                 System.out.println(Thread.currentThread().getName() + " reading");
+//                 Thread.sleep(100);
+//             } catch (InterruptedException e) {
+//                 Thread.currentThread().interrupt();
+//                 System.err.println(Thread.currentThread().getName() + " interrupted during read");
+//             } finally {
+//                 lock.readUnlock();
+//                 System.out.println(Thread.currentThread().getName() + " read unlock");
+//             }
+//         }
+//     }
+
+
+
+// public class ReadWriteLock {
+//     public static void main(String[] args) {
+//         ReadWrite lock = new ReadWrite();
+//         ReaderThread reader = new ReaderThread(lock);
+//         Thread t1 = new Thread(reader, "Reader 1");
+//         Thread t2 = new Thread(reader, "Reader 2");
+//         Thread t3 = new Thread(new WriterThread(lock), "Writer 1");
+//         Thread t4 = new Thread(reader, "Reader 3");
+//         Thread t5 = new Thread(new WriterThread(lock), "Writer 2");
+
+//         t1.start();
+//         t2.start();
+//         t3.start();
+//         t4.start();
+//         t5.start();
+
+//         try {
+//             t1.join();
+//             t2.join();
+//             t3.join();
+//             t4.join();
+//             t5.join();
+//         } catch (InterruptedException e) {
+//             Thread.currentThread().interrupt();
+//             System.err.println("Main thread interrupted");
+//         }
+
+//         System.out.println("Main thread finished");
+//     }
+
+//     static class WriterThread implements Runnable {
+//         private ReadWrite lock;
+
+//         public WriterThread(ReadWrite lock) {
+//             this.lock = lock;
+//         }
+
+//         @Override
+//         public void run() {
+//             try {
+//                 lock.writeLock();
+//                 System.out.println(Thread.currentThread().getName() + " writing");
+//                 Thread.sleep(200);
+//             } catch (InterruptedException e) {
+//                 Thread.currentThread().interrupt();
+//                 System.err.println(Thread.currentThread().getName() + " interrupted during write");
+//             } finally {
+//                 lock.writeUnlock();
+//                 System.out.println(Thread.currentThread().getName() + " write unlock");
+//             }
+//         }
+//     }  
+// }
+
+/*
+Since here we're using ReaderThread(lock) & WriterThread(lock) multiple times - It makes
+sense to implemet them rather than using lambda function
+*/

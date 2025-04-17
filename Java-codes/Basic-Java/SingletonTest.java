@@ -104,6 +104,8 @@ Eager Initialization:
 Thread Safety: Inherently thread-safe. The instance is created when the class is loaded, which is guaranteed to be thread-safe by the JVM.
 Performance: Slightly less performant in terms of memory usage if the singleton is never used, as it's created regardless. However, it's generally faster for subsequent calls to getInstance() because there's no synchronization overhead.
 Simplicity: Very simple to implement.
+
+
 Lazy Initialization (Synchronized Method):
 
 Thread Safety: Thread-safe, but with significant performance overhead due to the synchronized keyword on the getInstance() method. Every call to getInstance() acquires a lock, even after the instance has been created.
@@ -115,12 +117,14 @@ Thread Safety: Thread-safe when implemented correctly (using volatile for the in
 Performance: Better performance than the synchronized method approach, but can still have some overhead.
 Complexity: Slightly more complex to implement correctly. Requires careful use of volatile.
 Prior to Java 5, Double-Checked Locking had issues with some JVM implementations. Volatile was not properly implemented and could allow race conditions. Java 5 and later fixes this issue.
+
 Lazy Initialization (Static Inner Class):
 
 Thread Safety: Inherently thread-safe. The inner class is loaded only when getInstance() is called, and the instance is created only once.
 Performance: Good performance, as it avoids unnecessary synchronization.
 Simplicity: Relatively simple and considered the best practice for lazy initialization.
 Recommended approach: This is the best approach for lazy initialization. It combines lazy loading with thread safety without requiring explicit locking.
+
 Which to Choose:
 
 If the singleton is always needed, use eager initialization for simplicity and performance.
