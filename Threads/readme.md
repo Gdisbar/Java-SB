@@ -8,6 +8,8 @@
 # DataProcessingPipeline
 - CountDownLatch
 - CyclicBarrier
+# EComStore
+- CompletableFuture
 # ForkJoinFrameWork
 - Fork-Join FrameWork
 # ParallelUrlProcessing
