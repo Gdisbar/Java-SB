@@ -1,4 +1,56 @@
 /*
+Process (Running two instances of a browser)
+-----------------------------------------------------
+Process is a program in execution.Each process has its own memory space
+Processes communicate using IPC (Inter-Process Communication)
+
+Thread (Opening two tabs in a browser)
+---------------------------------------------------------
+A lightweight subtask within a process, Threads within a process share memory
+Threads communicate using shared memory
+
+Java provides robust support for multithreading through the 
+java.lang.Thread class, Runnable interface, Executor Framework, and various concurrent utilities.
+
+// Start a new process using ProcessBuilder
+try {
+    Process process = new ProcessBuilder("notepad.exe").start();
+    System.out.println("Process started");
+} catch (Exception e) {
+    e.printStackTrace();
+}
+
+Single-threaded vs Multithreaded Execution
+-----------------------------------------------------------------------
+Single-threaded -> One task is executed at a time
+Multithreaded   -> Multiple tasks are executed concurrently
+Parallelism     -> True simultaneous execution (multiple processors)
+Concurrency     -> Tasks are managed in an overlapping time frame
+
+Why Multithreading is Needed?
+✔️ Efficient CPU utilization
+✔️ Improved performance
+✔️ Better resource sharing
+✔️ Faster response times
+✔️ Handling large I/O-bound operations
+
+
+
+
+Best Practices
+----------------------------------
+✅ Minimize the scope of synchronized blocks.
+✅ Avoid holding locks for too long.
+✅ Use ExecutorService over manual thread creation.
+✅ Handle InterruptedException properly.
+✅ Use ConcurrentHashMap instead of Hashtable.
+✅ Use lock ordering to prevent deadlocks
+✅ Release locks in finally blocks
+✅ Consider higher-level concurrency utilities when appropriate
+✅ Use thread-safe collections from java.util.concurrent package
+✅ Prefer atomic variables for simple counters and flags
+✅ Avoid nested locks when possible
+
 Thread Lifecycle
 =============================================================================================
 The lifecycle of a thread in Java consists of several states, which a thread can move
