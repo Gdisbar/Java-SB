@@ -5,11 +5,11 @@
 - ExecutorService methods
 - Callable vs Runnable
 - Future
+# CompletableFutureOps
+- CompletableFuture
 # DataProcessingPipeline
 - CountDownLatch
 - CyclicBarrier
-# EComStore
-- CompletableFuture
 # ForkJoinFrameWork
 - Fork-Join FrameWork
 # ParallelUrlProcessing
