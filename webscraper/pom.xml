@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.javacode</groupId>
+    <artifactId>webscraper</artifactId>
+    <version>V1.0-SNAPSHOT</version>
+    <dependencies>
+        <dependency>
+            <!--Json-->
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20250107</version>
+        </dependency>
+        <dependency>
+            <!-- JSoup -->
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.17.2</version>
+        </dependency>
+        <!-- Selenium Java -->
+<!--        <dependency>-->
+<!--            <groupId>org.seleniumhq.selenium</groupId>-->
+<!--            <artifactId>selenium-java</artifactId>-->
+<!--            <version>4.31.0</version> &lt;!&ndash; or latest &ndash;&gt;-->
+<!--        </dependency>-->
+
+        <!-- WebDriver Manager (for automatic chromedriver management) -->
+<!--        <dependency>-->
+<!--            <groupId>io.github.bonigarcia</groupId>-->
+<!--            <artifactId>webdrivermanager</artifactId>-->
+<!--            <version>6.0.1</version> &lt;!&ndash; or latest &ndash;&gt;-->
+<!--        </dependency>-->
+    </dependencies>
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+<!--                <version>3.11.0</version>-->
+<!--                <configuration><archive>-->
+<!--                    <manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile>-->
+<!--                </archive></configuration>-->
+            </plugin>
+
+        </plugins>
+    </build>
+
+</project>
