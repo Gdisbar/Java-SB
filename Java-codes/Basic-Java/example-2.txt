@@ -1,4 +1,0 @@
-Hello world
-This is line 1 of example.txt.
-This is line 2.
-And this is the final line.
