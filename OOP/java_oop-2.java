@@ -1,11 +1,12 @@
 ✅ Inheritance
 -------------------------------------------------------------------------
-Inheritance is the process by which a child class (subclass) acquires the properties and 
-behaviors (fields and methods) of a parent class (superclass).
+Inheritance is the process by which a child class (subclass) acquires the 
+properties and behaviors (fields and methods) of a parent class (superclass).
 In Java, inheritance is implemented using the extends keyword
 
 Inheritance enables:
-Code reusability – The child class can reuse existing functionality of the parent class.
+Code reusability – The child class can reuse existing functionality of 
+the parent class.
 Extensibility – The child class can add or modify behavior.
 Polymorphism – Enables dynamic method binding.
 
@@ -36,7 +37,8 @@ public class Car extends Vehicle {
 
 Multi-level Inheritance
 --------------------------------------------------------------------------------
-A chain of inheritance where a class extends another class, which in turn extends another class.
+A chain of inheritance where a class extends another class, which in turn 
+extends another class.
 
 public class Vehicle {
     protected String make;
@@ -60,12 +62,6 @@ class SportsCar extends Car {
 
 Hierarchical Inheritance (Multiple classes extend from a single superclass)
 ------------------------------------------------------------------------------------
-If you want to declare Developer or Manager class as public, private or protected  
-do that in separate file save them with Developer.java & Manager.java - otherwise compiler 
-will show error since 
-In Java, a source file (.java file) can contain at most one public top-level class 
-(a class not nested within another class). The name of this public class must match the 
-name of the file (excluding the .java extension).
 
 public class Employee {
     // Common employee attributes and methods
@@ -83,9 +79,6 @@ Multiple Inheritance (through interfaces )
 -----------------------------------------------------------------------------
 🎯 interface
 ---------------------------------------------------------------------
-While a Java source file can have at most one public top-level class, this restriction 
-doesn't apply to interfaces. You can have multiple public interfaces in a single .java file.
-
 Only method signatures & constants, no implementation.
 Achieves multiple inheritance & Abstraction.
 

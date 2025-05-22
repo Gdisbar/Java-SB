@@ -1,20 +1,31 @@
 🚀 What is Object-Oriented Programming (OOP)?
 ----------------------------------------------------------------------------------------
+<<<<<<< HEAD
 Object-Oriented Programming (OOP) is a programming paradigm based on the concept of "objects" 
 that represent real-world entities.
     
+=======
+Object-Oriented Programming (OOP) is a programming paradigm based on the 
+concept of "objects" that represent real-world entities.
+
+>>>>>>> 5cbda8c (Combined commit-6)
 In OOP:
 
 Objects = State (data) + Behavior (methods)
 An Object is an instance of a Class.
-OOP provides a way to structure a program using objects rather than actions and logic.
+OOP provides a way to structure a program using objects rather than 
+actions and logic.
 
 🏆 Core Principles of OOP
 --------------------------------------------------------------------------------------
-Encapsulation – Hiding internal details of an object and providing controlled access via methods.
-Inheritance – A class (child) can inherit properties and behaviors from another class (parent).
-Polymorphism – A single entity (method or operator) can behave differently depending on the context.
-Abstraction – Hiding complex implementation details and exposing only the essential parts.
+Encapsulation – Hiding internal details of an object and providing 
+controlled access via methods.
+Inheritance – A class (child) can inherit properties and behaviors from 
+another class (parent).
+Polymorphism – A single entity (method or operator) can behave differently 
+depending on the context.
+Abstraction – Hiding complex implementation details and exposing only the 
+essential parts.
 
 Data Handling - Data and functions are combined in objects
 Code Reusability - 	Code is reusable through inheritance
@@ -23,7 +34,8 @@ Security - Controlled access through encapsulation
 ✅ Classes and Objects
 -------------------------------------------------------------------------
 A class is a blueprint or template for creating objects.
-A class defines the state (stored in fields/attributes) and behavior (implemented through methods) of objects.
+A class defines the state (stored in fields/attributes) and 
+behavior (implemented through methods) of objects.
 
 An object is an instance of a class.
 Objects are created using the new keyword.
@@ -46,8 +58,9 @@ Default Constructor – No parameters.
 Parameterized Constructor – Takes arguments to initialize objects.
 Copy Constructor – Creates a new object as a copy of an existing object.
 
-Even if compile creates default constructor,we do it explicitly since we don't know  
-how a object will be created in future (Parameterized or non-Parameterized)
+Even if compile creates default constructor,we do it explicitly since 
+we don't know how a object will be created in future (Parameterized or 
+non-Parameterized)
 
 Default value for reference type (Wrapper class :String,Integer) is null & 
 for number it's 0
@@ -254,15 +267,17 @@ public class BankAccount {
 -----------------------------------------------------------------------
 private: Accessible only within the declared class
 default (no modifier): Accessible within the declared class & same package
-protected: Accessible within the same package & by subclasses(even if they are in a different package)
+protected: Accessible within the same package & by 
+subclasses(even if they are in a different package)
 public: Accessible from the same package + by subclasses + other packages
 
-In Java, a source file (.java file) can contain at most one public top-level class 
-(a class not nested within another class). The name of this public class must match the 
-name of the file (excluding the .java extension).
+In Java, a source file (.java file) can contain at most one public top-level 
+class (a class not nested within another class). The name of this public 
+class must match the name of the file (excluding the .java extension).
 
-While a Java source file can have at most one public top-level class, this restriction 
-doesn't apply to interfaces. You can have multiple public interfaces in a single .java file.
+While a Java source file can have at most one public top-level class, this 
+restriction doesn't apply to interfaces. You can have multiple public 
+interfaces in a single .java file.
 
 
 proper use of access modifiers helps create
@@ -272,8 +287,8 @@ Implementation Hiding: Private details can change without affecting users
 Package Architecture: Default visibility helps organize related classes
 Extension Points: Protected members allow for controlled inheritance
 
-The access modifier of a class's attributes (members) can be the same as or more 
-restrictive (lower level) than the access modifier of the class itself.
+The access modifier of a class's attributes (members) can be the same as or 
+more restrictive (lower level) than the access modifier of the class itself.
 
 class Engine {
     // Members of the Engine class can have various access modifiers.
@@ -295,7 +310,8 @@ class Engine {
 }
 
 public class Car {
-    // The Car class is public, so its members can have public, protected, package-private, or private access.
+    // The Car class is public, so its members can have public, protected, 
+    // package-private, or private access.
     public String model;
     protected String color;
     String registrationNumber; // Default (package-private) access
@@ -313,18 +329,24 @@ public class Car {
     }
 
     protected void prepareForDrive() {
-        engine.warmUp(); // Protected method of Engine can be accessed in this class and subclasses.
+        // Protected method of Engine can be accessed in this class and 
+        // subclasses.
+        engine.warmUp(); 
         System.out.println("Car prepared for drive.");
     }
 
     void showCarDetails() { // Default (package-private) access
-        engine.idle(); // Default method of Engine can be accessed in the same package.
-        System.out.println("Model: " + model + ", Color: " + color + ", Registration: " + registrationNumber);
+        // Default method of Engine can be accessed in the same package.
+        engine.idle(); 
+        System.out.println("Model: " + model + ", Color: " + color + 
+            ", Registration: " + registrationNumber);
     }
 
     private void performInternalCheck() {
-        // Private method of Engine can be accessed only within the Engine class.
-        // engine.internalCheck(); // uncomment this line will cause compiler access-error
+        // Private method of Engine can be accessed only within 
+        // the Engine class.Uncomment this line will cause compiler 
+        // access-error
+        // engine.internalCheck(); 
         System.out.println("Car internal check done.");
     }
 
@@ -337,9 +359,11 @@ public class Car {
     }
 }
 
-Since Car is public, its attributes can be public, protected, default (package-private), or private.
+Since Car is public, its attributes can be public, protected, 
+default (package-private), or private.
 The Engine class is also accessible by the car class.
 The Car class can call the public and protected methods of the engine class.
-The Car class can call the default method of the engine class, if the Car class is in the same package as the Engine class.
+The Car class can call the default method of the engine class, 
+if the Car class is in the same package as the Engine class.
 The car class can not call the private method of the engine class.
 
