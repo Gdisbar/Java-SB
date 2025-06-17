@@ -1,0 +1,160 @@
+# Java Interview Problems for 3 Years Experienced Developer
+
+Here are 10 take-home style Java interview problems suitable for a developer with 3 years of experience. Each problem focuses on demonstrating proficiency in OOPs, Threads, Collections, and advanced Java features (up to Java 17).
+
+## Problem 1: Thread-Safe Counter with Custom Lock Implementation
+
+**Problem Statement:**
+Implement a thread-safe counter class that can be incremented and decremented concurrently by multiple threads. Rather than using standard Java synchronization primitives like `synchronized` or `ReentrantLock`, implement your own lock mechanism using atomic operations.
+
+**Requirements:**
+1. Create a `CustomLock` class that provides `lock()` and `unlock()` methods
+2. Implement a `ThreadSafeCounter` class that uses this custom lock
+3. The counter should handle concurrent increments and decrements correctly
+4. Include a method to retrieve the current count
+5. Demonstrate the counter's thread safety with a multi-threaded test
+
+**Expected Solution Approach:**
+Use `AtomicBoolean` or another atomic class to implement the lock mechanism. Ensure proper memory visibility between threads using volatile variables or other Java Memory Model compliant approaches.
+
+## Problem 2: Generic Cache with LRU Eviction Strategy
+
+**Problem Statement:**
+Design and implement a generic cache with a Least Recently Used (LRU) eviction policy. The cache should be thread-safe and efficiently handle concurrent access.
+
+**Requirements:**
+1. Create a generic `LRUCache<K, V>` class with configurable capacity
+2. Implement `get(K key)`, `put(K key, V value)`, and `remove(K key)` operations
+3. When the cache reaches capacity, the least recently used item should be evicted
+4. All operations should be thread-safe
+5. Provide O(1) time complexity for common operations
+6. Include statistics tracking (hits, misses, evictions)
+
+**Expected Solution Approach:**
+Use a combination of `ConcurrentHashMap` and a synchronized double-linked list to track the access order, or consider Java's `LinkedHashMap` with proper synchronization.
+
+## Problem 3: Immutable Value Objects with Records
+
+**Problem Statement:**
+Design an immutable object hierarchy representing a financial transaction system using Java Records. Demonstrate how records can replace traditional immutable value classes while providing better conciseness and built-in functionality.
+
+**Requirements:**
+1. Create a base `transaction.Transaction` record with common transaction attributes
+2. Implement specialized transaction types (e.g., `transaction.PaymentTransaction`, `transaction.RefundTransaction`)
+3. Include validation logic to ensure transaction integrity
+4. Demonstrate pattern matching with records (Java 16+)
+5. Implement a transaction processor that handles different transaction types differently
+
+**Expected Solution Approach:**
+Leverage Java Records for immutability, use sealed classes/interfaces for type hierarchies, and implement pattern matching for type-specific processing.
+
+## Problem 4: Custom Collection with Stream API Integration
+
+**Problem Statement:**
+Implement a custom collection class called `CircularBuffer<E>` that functions as a fixed-size circular buffer (ring buffer) and properly integrates with the Java Stream API.
+
+**Requirements:**
+1. Create a `CircularBuffer<E>` class that implements `Collection<E>`
+2. The buffer should have a fixed capacity defined at creation time
+3. When the buffer is full, adding new elements should overwrite the oldest ones
+4. Provide efficient iteration in insertion order
+5. Ensure full compatibility with Java's Stream API
+6. Make the implementation thread-safe
+
+**Expected Solution Approach:**
+Implement the required Collection interfaces with an underlying array or appropriate data structure. Pay special attention to the iterator implementation and stream compatibility.
+
+## Problem 5: Asynchronous Task Executor with CompletableFuture
+
+**Problem Statement:**
+Design an asynchronous task execution framework that processes tasks in parallel with dependencies between them. Use modern Java concurrency features like `CompletableFuture`.
+
+**Requirements:**
+1. Create a `Task` interface with an `execute()` method returning a `CompletableFuture`
+2. Implement a `TaskExecutor` class that can schedule and run tasks
+3. Support task dependencies - a task can depend on completion of other tasks
+4. Include timeout handling and error propagation
+5. Implement a mechanism to limit the number of concurrently executing tasks
+6. Provide a way to cancel all in-progress tasks
+
+**Expected Solution Approach:**
+Use CompletableFuture for asynchronous execution and composition, along with an ExecutorService for thread management.
+
+## Problem 6: Event-Driven Programming with Custom Event Bus
+
+**Problem Statement:**
+Implement a lightweight event bus system that allows components to communicate through events without direct coupling.
+
+**Requirements:**
+1. Design an event bus that supports publishing and subscribing to events
+2. Support typed events with inheritance (subscribers can listen to a base event type)
+3. Allow both synchronous and asynchronous event dispatching
+4. Implement thread safety for concurrent publishers and subscribers
+5. Include support for filtering events based on properties
+6. Support dead letter queue for unhandled events
+
+**Expected Solution Approach:**
+Use a combination of the Observer pattern, Java's functional interfaces, and concurrent collections to implement the event bus.
+
+## Problem 7: Functional Programming with Custom Collectors
+
+**Problem Statement:**
+Create custom collectors for the Stream API to perform specialized collection operations not provided by the standard library.
+
+**Requirements:**
+1. Implement a `TopN<T>` collector that collects the top N elements based on a comparator
+2. Create a `GroupByAndCount<T>` collector that groups elements and counts occurrences
+3. Implement a `PartitionByThreshold<T>` collector that partitions elements based on a numeric threshold
+4. Design a `RollingAverage<T>` collector that computes averages over a sliding window
+5. Ensure all collectors work with parallel streams
+
+**Expected Solution Approach:**
+Implement the `Collector` interface with appropriate characteristics, combining operations, and finish operations.
+
+## Problem 8: Custom Annotations and Reflection for Configuration
+
+**Problem Statement:**
+Design a configuration framework using custom annotations and reflection to inject configuration values into objects.
+
+**Requirements:**
+1. Create custom annotations like `@ConfigValue(key="name")` for field injection
+2. Implement a `ConfigInjector` class that can inject values into annotated fields
+3. Support different data types (String, Integer, Boolean, etc.)
+4. Include validation annotations for configuration values
+5. Support loading configurations from different sources (properties file, environment variables)
+6. Implement intelligent type conversion
+
+**Expected Solution Approach:**
+Use Java's reflection API to scan for annotated fields and inject appropriate values. Handle type conversion and validation appropriately.
+
+## Problem 9: Reactive String Processing Pipeline
+
+**Problem Statement:**
+Implement a reactive string processing pipeline that can transform and filter strings in a non-blocking, backpressure-aware manner.
+
+**Requirements:**
+1. Create a `StringProcessor` interface with methods to transform and filter strings
+2. Implement a `ReactiveStringPipeline` class that chains processors
+3. Support asynchronous processing of strings with backpressure handling
+4. Include error handling and recovery strategies
+5. Implement common string operations (split, join, replace, etc.) as processors
+6. Support parallel processing of independent operations
+
+**Expected Solution Approach:**
+Use the Reactive Streams API or a similar approach with `Flow` interfaces (Java 9+) to implement a publisher-subscriber model with backpressure support.
+
+## Problem 10: Sealed Classes for Domain Modeling
+
+**Problem Statement:**
+Use Java 17's sealed classes feature to model a payment processing system with strict type hierarchies and compile-time safety.
+
+**Requirements:**
+1. Design a sealed hierarchy for payment methods (Credit Card, Bank Transfer, Digital Wallet)
+2. Create a sealed hierarchy for payment statuses (Pending, Completed, Failed, Refunded)
+3. Implement a payment processor that uses pattern matching for exhaustive handling
+4. Include validation logic specific to each payment method
+5. Demonstrate how sealed classes prevent unexpected extensions of the hierarchy
+6. Show how pattern matching switch expressions improve code readability
+
+**Expected Solution Approach:**
+Use sealed classes/interfaces to define closed type hierarchies, and leverage pattern matching with switch expressions for exhaustive type handling.
